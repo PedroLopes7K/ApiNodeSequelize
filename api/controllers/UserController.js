@@ -36,7 +36,7 @@ class UserController {
       const user = await database.Users.create(userData)
       return res
         .status(200)
-        .json({ msg: 'User updated successfuly!', user: user })
+        .json({ msg: 'User created successfuly!', user: user })
     } catch (error) {
       return res.status(500).json(error.message)
     }

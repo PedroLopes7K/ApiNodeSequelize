@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     Classes.hasMany(models.Registration, {
       foreignKey: 'classe_id'
     })
-    Classes.belongsTo(models.Level, {
+    Classes.belongsTo(models.Levels, {
       foreignKey: 'level_id'
     })
     Classes.belongsTo(models.Users, {
