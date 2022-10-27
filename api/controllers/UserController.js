@@ -92,6 +92,53 @@ class UserController {
       return res.status(500).json(error.message)
     }
   }
-}
 
+  static async insertRegistration(req, res) {
+    const { id } = req.params
+    const newRegistration = { ...req.body, student_id: Number(id) }
+    try {
+      const newRegistrationCreated = await database.Registration.create(
+        newRegistration
+      )
+      return res.status(200).json(newRegistrationCreated)
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+
+  static async updateRegistration(req, res) {
+    const { id, registrationId } = req.params
+    const registrationData = req.body
+    try {
+      await database.Registration.update(registrationData, {
+        where: {
+          id: Number(registrationId),
+          student_id: Number(id)
+        }
+      })
+      const registrationUpdated = await database.Registration.findOne({
+        where: {
+          id: Number(registrationId)
+        }
+      })
+      return res.status(200).json(registrationUpdated)
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+  static async deleteRegistration(req, res) {
+    const { id, registrationId } = req.params
+    try {
+      await database.Registration.destroy({
+        where: {
+          id: Number(registrationId),
+          student_id: Number(id)
+        }
+      })
+      return res.status(200).json({ msg: 'Registration deleted successfuly!' })
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+}
 module.exports = UserController
