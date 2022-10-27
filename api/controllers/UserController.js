@@ -78,6 +78,20 @@ class UserController {
       return res.status(500).json(error.message)
     }
   }
+
+  static async getRegistrations(req, res) {
+    const { id } = req.params
+    try {
+      const registrations = await database.Registration.findAll({
+        where: {
+          student_id: Number(id)
+        }
+      })
+      return res.status(200).json(registrations)
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
 }
 
 module.exports = UserController
